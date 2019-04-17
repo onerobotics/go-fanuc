@@ -122,12 +122,18 @@ func (c *Client) GetPositionRegisters() ([]PositionRegister, error) {
 					float32(j6)},
 			})
 		default:
-			cfgFlip := m[6] == "N"
+			cfgFlip := m[6] == "F"
 			cfgUp := m[7] == "U"
 			cfgTop := m[8] == "T"
 			tc1, _ := strconv.Atoi(m[9])
 			tc2, _ := strconv.Atoi(m[10])
 			tc3, _ := strconv.Atoi(m[11])
+			/* TODO: components will have float32 zero value
+			 * even if FANUC data is UNINIT (e.g. ****)
+			 * should the PositionRegister struct just store
+			 * the string values and let the user parse things
+			 * out?
+			 */
 			x, _ := strconv.ParseFloat(m[12], 32)
 			y, _ := strconv.ParseFloat(m[13], 32)
 			z, _ := strconv.ParseFloat(m[14], 32)
