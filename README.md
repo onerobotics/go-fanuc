@@ -11,7 +11,7 @@ client).
 Construct a new FANUC client, then use the various services on the client
 to access different parts of the FANUC robot. For example:
 
-    c := &fanuc.Client{Host: "127.0.0.101"}
+    c := fanuc.NewClient("127.0.0.101")
 
     numregs, err := c.GetNumericRegisters()
     if err != nil {
