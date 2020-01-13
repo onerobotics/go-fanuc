@@ -23,7 +23,7 @@ func newFileGetter(dir string) (*fileGetter, error) {
 	return &fileGetter{dir: dir}, nil
 }
 
-func (c *fileGetter) get(filename string) (result string, err error) {
+func (c *fileGetter) Get(filename string) (result string, err error) {
 	body, err := ioutil.ReadFile(path.Join(c.dir, filename))
 	if err != nil {
 		return

@@ -1,35 +1,35 @@
 package fanuc
 
-type getter interface {
-	get(string) (string, error)
+type Getter interface {
+	Get(string) (string, error)
 }
 
-type client struct {
-	getter
+type Client struct {
+	Getter
 
 	io []IO
 }
 
-func NewFileClient(dir string) (*client, error) {
+func NewFileClient(dir string) (*Client, error) {
 	g, err := newFileGetter(dir)
 	if err != nil {
 		return nil, err
 	}
 
-	return &client{getter: g}, nil
+	return &Client{Getter: g}, nil
 }
 
-func NewHTTPClient(host string, timeout int) (*client, error) {
+func NewHTTPClient(host string, timeout int) (*Client, error) {
 	g, err := newHTTPGetter(host, timeout)
 	if err != nil {
 		return nil, err
 	}
 
-	return &client{getter: g}, nil
+	return &Client{Getter: g}, nil
 }
 
-func (c *client) Errors() ([]Error, error) {
-	body, err := c.get("errall.ls")
+func (c *Client) Errors() ([]Error, error) {
+	body, err := c.Get("errall.ls")
 	if err != nil {
 		return nil, err
 	}
@@ -37,8 +37,8 @@ func (c *client) Errors() ([]Error, error) {
 	return parseErrors(body)
 }
 
-func (c *client) Frames() ([]Frame, error) {
-	body, err := c.get("frame.dg")
+func (c *Client) Frames() ([]Frame, error) {
+	body, err := c.Get("frame.dg")
 	if err != nil {
 		return nil, err
 	}
@@ -46,8 +46,8 @@ func (c *client) Frames() ([]Frame, error) {
 	return parseFrames(body)
 }
 
-func (c *client) cacheIO() error {
-	body, err := c.get("iostate.dg")
+func (c *Client) cacheIO() error {
+	body, err := c.Get("iostate.dg")
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func contains(t Type, types []Type) bool {
 	return false
 }
 
-func (c *client) IO(types ...Type) ([]IO, error) {
+func (c *Client) IO(types ...Type) ([]IO, error) {
 	if c.io == nil {
 		err := c.cacheIO()
 		if err != nil {
@@ -94,8 +94,8 @@ func (c *client) IO(types ...Type) ([]IO, error) {
 	return result, nil
 }
 
-func (c *client) NumericRegisters() ([]NumericRegister, error) {
-	body, err := c.get("numreg.va")
+func (c *Client) NumericRegisters() ([]NumericRegister, error) {
+	body, err := c.Get("numreg.va")
 	if err != nil {
 		return nil, err
 	}
@@ -103,8 +103,8 @@ func (c *client) NumericRegisters() ([]NumericRegister, error) {
 	return parseNumericRegisters(body)
 }
 
-func (c *client) PositionRegisters() ([]PositionRegister, error) {
-	body, err := c.get("posreg.va")
+func (c *Client) PositionRegisters() ([]PositionRegister, error) {
+	body, err := c.Get("posreg.va")
 	if err != nil {
 		return nil, err
 	}
