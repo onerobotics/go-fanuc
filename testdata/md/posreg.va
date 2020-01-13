@@ -1,0 +1,112 @@
+<HTML> <HEAD> <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE"></HEAD> <BODY> <PRE>
+[*POSREG*]$POSREG  Storage: SHADOW  Access: RW  : ARRAY[1,100] OF Position Reg
+    [1,1] =   'Maintenance' Uninitialized
+    [1,2] =   'pr2' Uninitialized
+    [1,3] =   'pr3' Uninitialized
+    [1,4] =   'pr4' Uninitialized
+    [1,5] =   'pr5' Uninitialized
+    [1,6] =   'ZERO' Uninitialized
+    [1,7] =   'Place APTO' 
+  Group: 1   Config: N D B, 0, 0, 0
+  X:     1.000   Y:     2.000   Z:  -100.000
+  W:     4.000   P:     5.000   R:     6.000
+    [1,8] =   'Place RTTO' Uninitialized
+    [1,9] =   'UTOOL' Uninitialized
+    [1,10] =   'InfeedPerch' Uninitialized
+    [1,11] =   'OutfeedPerch' Uninitialized
+    [1,12] =   'AccumulatorPerch' Uninitialized
+    [1,13] =   'AccumulatorOffse' Uninitialized
+    [1,14] =   'AccRegisterTO' Uninitialized
+    [1,15] =   'Foam ApprOS' Uninitialized
+    [1,16] =   'Foam RetrOS' Uninitialized
+    [1,17] =   'VertPickPerch' Uninitialized
+    [1,18] =   'HorizPickPerch' Uninitialized
+    [1,19] =   'VertDropPerch' Uninitialized
+    [1,20] =   'Outfeed Approach' 
+  Group: 1   Config: N D B, 0, 0, 0
+  X:     1.000   Y:     2.000   Z:   -10.000
+  W:     4.000   P:     5.000   R:     6.000
+    [1,21] =   'Regrip Place' Uninitialized
+    [1,22] =   'Regrip Pick' Uninitialized
+    [1,23] =   'S02HoodOS' Uninitialized
+    [1,24] =   'PkDsOS' Uninitialized
+    [1,25] =   'Ap2Ofs' Uninitialized
+    [1,26] =   'Regrip RetrOS' Uninitialized
+    [1,27] =   'Regrip ExitOS' Uninitialized
+    [1,28] =   'S02 PnP Ref' Uninitialized
+    [1,29] =   'Cur Slip Plc Pos' Uninitialized
+    [1,30] =   'ConvFoam Clear' Uninitialized
+    [1,31] =   'FoamPlace1' Uninitialized
+    [1,32] =   'FoamPlace2' Uninitialized
+    [1,33] =   'FoamPlace3' Uninitialized
+    [1,34] =   'ConvFoam PerchOS' Uninitialized
+    [1,35] =   'ConvFoamApprOS' Uninitialized
+    [1,36] =   'ConvFoamRetrOS' Uninitialized
+    [1,37] =   'ConvFoamExitOS' Uninitialized
+    [1,38] =   'Slip Placement 1' Uninitialized
+    [1,39] =   'Slip Placement 2' Uninitialized
+    [1,40] =   'ConvAssyClear' Uninitialized
+    [1,41] =   'AssyPick' Uninitialized
+    [1,42] =   'Diag Return Pal1' Uninitialized
+    [1,43] =   'Diag Return Pal2' Uninitialized
+    [1,44] =   'AssyPerchOS' Uninitialized
+    [1,45] =   'AssyAppOS' Uninitialized
+    [1,46] =   'AssyRetrOS' Uninitialized
+    [1,47] =   'AssyExitOS' Uninitialized
+    [1,48] =   'CalcZPos 1' Uninitialized
+    [1,49] =   'CalcZpos 2' Uninitialized
+    [1,50] =   'Assy Clear' Uninitialized
+    [1,51] =   'Assy Place' Uninitialized
+    [1,52] =   'Assy PlaceRef' Uninitialized
+    [1,53] =   'BracketPlace' Uninitialized
+    [1,54] =   'Perch Pos' Uninitialized
+    [1,55] =   'Assy ApprOS' Uninitialized
+    [1,56] =   'Pk1 Cv Ap Ofst' Uninitialized
+    [1,57] =   'Pk1 Cv Ref Pos' Uninitialized
+    [1,58] =   'Dp1 Cv Ap Ofst' Uninitialized
+    [1,59] =   'Dp1 Cv Ref Pos' Uninitialized
+    [1,60] =   'Pk1 FS Ap Ofst' Uninitialized
+    [1,61] =   'Pk1 FS Ref Pos' Uninitialized
+    [1,62] =   'Dp1 FS Ap Ofst' Uninitialized
+    [1,63] =   'Dp1 FS Ref Pos' Uninitialized
+    [1,64] =   'Frame PerchOS' Uninitialized
+    [1,65] =   'Frame ApprOS' Uninitialized
+    [1,66] =   'Frame RetrOS' Uninitialized
+    [1,67] =   'Frame ExitOS' Uninitialized
+    [1,68] =   '' Uninitialized
+    [1,69] =   '' Uninitialized
+    [1,70] =   'AssyPick' Uninitialized
+    [1,71] =   'UTOOL 7' Uninitialized
+    [1,72] =   'UTOOL 8' Uninitialized
+    [1,73] =   'UTOOL 9' Uninitialized
+    [1,74] =   'UTOOL 10' Uninitialized
+    [1,75] =   'AssyPlace' Uninitialized
+    [1,76] =   'AssyPlaceAPTO' Uninitialized
+    [1,77] =   '' Uninitialized
+    [1,78] =   '' Uninitialized
+    [1,79] =   '' Uninitialized
+    [1,80] =   'inspect' Uninitialized
+    [1,81] =   'reject' Uninitialized
+    [1,82] =   'reject APOS' Uninitialized
+    [1,83] =   'reject RTOS' Uninitialized
+    [1,84] =   'BracketInsp2' Uninitialized
+    [1,85] =   'LPOS' Uninitialized
+    [1,86] =   'JPOS' Uninitialized
+    [1,87] =   'Box App' Uninitialized
+    [1,88] =   'Box App OS' Uninitialized
+    [1,89] =   'Box App2 OS' Uninitialized
+    [1,90] =   'App Pal OS' Uninitialized
+    [1,91] =   'App Pal' Uninitialized
+    [1,92] =   'Pick App Pal2' Uninitialized
+    [1,93] =   'BadPlaceAPTO' Uninitialized
+    [1,94] =   'BadPlaceRTTO' Uninitialized
+    [1,95] =   '' Uninitialized
+    [1,96] =   'M3 Place APTO' Uninitialized
+    [1,97] =   'M2 Place RTTO' Uninitialized
+    [1,98] =   '' Uninitialized
+    [1,99] =   '' Uninitialized
+    [1,100] =   '' Uninitialized
+
+[*POSREG*]$MAXPREGNUM  Storage: CMOS  Access: RW  : INTEGER = 100
+
+</PRE> </BODY> <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE"> </HTML>

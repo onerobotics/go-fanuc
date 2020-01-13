@@ -1,0 +1,37 @@
+<HTML> <HEAD> <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE"></HEAD> <BODY> <PRE>
+F Number: F00000    
+VERSION : HandlingTool         
+$VERSION: V9.10121      11/9/2018
+DATE:     12-JAN-20 13:32 
+
+Tool Frame
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat1
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat2
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat3
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat4
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat5
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat6
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat7
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat8
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat9
+   0.0     0.0     0.0     0.0     0.0     0.0 Eoat10
+
+Jog Frame
+   0.0     0.0     0.0     0.0     0.0     0.0 
+   0.0     0.0     0.0     0.0     0.0     0.0 
+   0.0     0.0     0.0     0.0     0.0     0.0 
+   0.0     0.0     0.0     0.0     0.0     0.0 
+   0.0     0.0     0.0     0.0     0.0     0.0 
+
+User Frame
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame1
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame2
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame3
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame4
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame5
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame6
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame7
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame8
+   0.0     0.0     0.0     0.0     0.0     0.0 UFrame9
+
+</PRE> </BODY> <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE"> </HTML>
