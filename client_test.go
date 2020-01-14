@@ -28,14 +28,14 @@ func TestHTTPClient(t *testing.T) {
 	allTests(c, t)
 }
 
-func allTests(c *Client, t *testing.T) {
+func allTests(c Client, t *testing.T) {
 	testNumregs(c, t)
 	testPosregs(c, t)
 	testErrors(c, t)
 	testIO(c, t)
 }
 
-func testNumregs(c *Client, t *testing.T) {
+func testNumregs(c Client, t *testing.T) {
 	// numregs
 	numregs, err := c.NumericRegisters()
 	if err != nil {
@@ -74,7 +74,7 @@ func testNumregs(c *Client, t *testing.T) {
 	}
 }
 
-func testPosregs(c *Client, t *testing.T) {
+func testPosregs(c Client, t *testing.T) {
 	posregs, err := c.PositionRegisters()
 	if err != nil {
 		t.Fatal(err)
@@ -108,7 +108,7 @@ func testPosregs(c *Client, t *testing.T) {
 
 }
 
-func testErrors(c *Client, t *testing.T) {
+func testErrors(c Client, t *testing.T) {
 	errors, err := c.Errors()
 	if err != nil {
 		t.Fatal(err)
@@ -150,7 +150,7 @@ func testErrors(c *Client, t *testing.T) {
 
 }
 
-func testIO(c *Client, t *testing.T) {
+func testIO(c Client, t *testing.T) {
 	tests := []struct {
 		Index int
 		Type

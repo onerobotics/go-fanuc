@@ -6,8 +6,8 @@ import (
 )
 
 func TestNewHTTPClientBadTimeout(t *testing.T) {
-	_, err := newHTTPGetter("host", 0)
-	exp := "Please specify a timeout > 0"
+	_, err := NewHTTPClient("host", 0)
+	exp := "timeout must be > 0"
 	if err == nil {
 		t.Fatal("want an error")
 	}
@@ -17,7 +17,7 @@ func TestNewHTTPClientBadTimeout(t *testing.T) {
 }
 
 func TestNewHTTPClientBadHost(t *testing.T) {
-	_, err := newHTTPGetter("\\", 100)
+	_, err := NewHTTPClient("\\", 100)
 	if _, ok := err.(*url.Error); !ok {
 		t.Fatal("wanted an url.Error")
 	}
