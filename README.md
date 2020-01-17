@@ -10,8 +10,7 @@ Construct a new FANUC client, then use its methods to get data.
     	fanuc "github.com/onerobotics/go-fanuc"
     )
 
-    c, err := fanuc.NewHTTPClient("127.0.0.101", 500)
-    // or fanuc.NewFileClient("./path/to/backup/dir")
+    c, err := fanuc.NewClient("127.0.0.1") // or fanuc.NewClient("./path/to/backup/dir")
     if err != nil {
     	return err
     }

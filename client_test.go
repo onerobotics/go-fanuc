@@ -20,7 +20,7 @@ func TestHTTPClient(t *testing.T) {
 	defer server.Close()
 	host := server.URL[7:] // remove http://
 
-	c, err := NewHTTPClient(host, 500)
+	c, err := NewHTTPClient(host)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -187,5 +187,23 @@ func testIO(c Client, t *testing.T) {
 		if bit.Comment != test.Comment {
 			t.Errorf("Bad comment. Got %q, want %q", bit.Comment, test.Comment)
 		}
+	}
+}
+
+func TestNewClient(t *testing.T) {
+	c, err := NewClient(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, ok := c.(*FileClient); !ok {
+		t.Errorf("Bad type. Got %T, want *FileClient", c)
+	}
+
+	c, err = NewClient("127.0.0.1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, ok := c.(*HTTPClient); !ok {
+		t.Errorf("Bad type. Got %T, want *HTTPClient", c)
 	}
 }

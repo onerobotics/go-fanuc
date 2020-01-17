@@ -1,9 +1,9 @@
 package fanuc
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"net/url"
 	"time"
@@ -16,25 +16,44 @@ type HTTPClient struct {
 	base *ParseClient
 }
 
-func NewHTTPClient(host string, timeout int) (*HTTPClient, error) {
+const (
+	// units are in seconds
+	DefaultClientTimeout    = 5
+	DefaultDialTimeout      = 1
+	DefaultHandshakeTimeout = 1
+	DefaultKeepAlive        = 30
+)
+
+func NewHTTPClient(host string) (*HTTPClient, error) {
 	baseURL, err := url.Parse(fmt.Sprintf("http://%s/md/", host))
 	if err != nil {
 		return nil, err
 	}
 
-	if timeout <= 0 {
-		return nil, errors.New("timeout must be > 0")
-	}
-
 	c := &HTTPClient{
 		baseURL: baseURL,
 		client: &http.Client{
-			Timeout: time.Duration(timeout) * time.Millisecond,
+			Timeout: DefaultClientTimeout * time.Second,
+			Transport: &http.Transport{
+				Proxy: http.ProxyFromEnvironment,
+				DialContext: (&net.Dialer{
+					Timeout:   DefaultDialTimeout * time.Second,
+					KeepAlive: DefaultKeepAlive * time.Second,
+				}).DialContext,
+				MaxIdleConns:        100,
+				IdleConnTimeout:     90 * time.Second,
+				TLSHandshakeTimeout: DefaultHandshakeTimeout * time.Second,
+			},
 		},
 	}
+
 	c.base = &ParseClient{GetFunc: c.get}
 
 	return c, nil
+}
+
+func (c *HTTPClient) SetTimeout(t time.Duration) {
+	c.client.Timeout = t
 }
 
 func (c *HTTPClient) get(path string) (result string, err error) {
