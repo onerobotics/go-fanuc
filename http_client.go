@@ -92,6 +92,17 @@ func (c *HTTPClient) get(dev device, path string) (string, error) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		switch resp.StatusCode {
+		case http.StatusForbidden:
+			return "", ErrForbidden
+		case http.StatusUnauthorized:
+			return "", ErrUnauthorized
+		default:
+			return "", fmt.Errorf("Request failed: %q (%d)", s, resp.StatusCode)
+		}
+	}
+
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
