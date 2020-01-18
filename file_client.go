@@ -28,13 +28,18 @@ func NewFileClient(dir string) (*FileClient, error) {
 	return c, nil
 }
 
-func (c *FileClient) get(filename string) (result string, err error) {
-	body, err := ioutil.ReadFile(path.Join(c.dir, filename))
-	if err != nil {
-		return
+func (c *FileClient) get(dev device, filename string) (string, error) {
+	// TODO: support other devices
+	if dev != MD {
+		return "", fmt.Errorf("%s device not supported", dev)
 	}
 
-	return string(body), nil
+	b, err := ioutil.ReadFile(path.Join(c.dir, filename))
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
 }
 
 func (c *FileClient) Errors() ([]Error, error) {

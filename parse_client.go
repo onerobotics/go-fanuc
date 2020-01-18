@@ -1,6 +1,6 @@
 package fanuc
 
-type GetFunc = func(string) (string, error)
+type GetFunc = func(device, string) (string, error)
 
 type ParseClient struct {
 	GetFunc
@@ -9,7 +9,7 @@ type ParseClient struct {
 }
 
 func (c *ParseClient) Errors() ([]Error, error) {
-	body, err := c.GetFunc("errall.ls")
+	body, err := c.GetFunc(MD, "errall.ls")
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +18,7 @@ func (c *ParseClient) Errors() ([]Error, error) {
 }
 
 func (c *ParseClient) Frames() ([]Frame, error) {
-	body, err := c.GetFunc("frame.dg")
+	body, err := c.GetFunc(MD, "frame.dg")
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func (c *ParseClient) Frames() ([]Frame, error) {
 }
 
 func (c *ParseClient) cacheIO() error {
-	body, err := c.GetFunc("iostate.dg")
+	body, err := c.GetFunc(MD, "iostate.dg")
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func (c *ParseClient) IO(types ...Type) ([]IO, error) {
 }
 
 func (c *ParseClient) NumericRegisters() ([]NumericRegister, error) {
-	body, err := c.GetFunc("numreg.va")
+	body, err := c.GetFunc(MD, "numreg.va")
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (c *ParseClient) NumericRegisters() ([]NumericRegister, error) {
 }
 
 func (c *ParseClient) PositionRegisters() ([]PositionRegister, error) {
-	body, err := c.GetFunc("posreg.va")
+	body, err := c.GetFunc(MD, "posreg.va")
 	if err != nil {
 		return nil, err
 	}

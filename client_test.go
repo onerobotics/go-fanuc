@@ -18,9 +18,8 @@ func TestFileClient(t *testing.T) {
 func TestHTTPClient(t *testing.T) {
 	server := httptest.NewServer(http.FileServer(http.Dir("testdata")))
 	defer server.Close()
-	host := server.URL[7:] // remove http://
 
-	c, err := NewHTTPClient(host)
+	c, err := NewHTTPClient(server.URL)
 	if err != nil {
 		t.Fatal(err)
 	}

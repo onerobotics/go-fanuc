@@ -1,6 +1,7 @@
 package fanuc
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -102,4 +103,21 @@ func (t Type) VerboseName() string {
 		s = "Invalid(" + strconv.Itoa(int(t)) + ")"
 	}
 	return s
+}
+
+type device int
+
+const (
+	MD device = iota
+	KAREL
+)
+
+func (d device) String() string {
+	switch d {
+	case MD:
+		return "MD"
+	case KAREL:
+		return "KAREL"
+	}
+	return fmt.Sprintf("device(%d)", d)
 }
