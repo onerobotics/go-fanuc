@@ -130,9 +130,9 @@ func parseIO(src string) (io []IO, err error) {
 		case "RO":
 			t = Rout
 		case "SI":
-			t = Rin
+			t = Sin
 		case "SO":
-			t = Rout
+			t = Sout
 		case "UI":
 			t = Uin
 		case "UO":
