@@ -27,7 +27,7 @@ func init() {
 	numregsRegexp = regexp.MustCompile(`\s+\[(\d+)\] = (-?\d*(\.\d+)?)  '([^']*)'`)
 	posregsRegexp = regexp.MustCompile(`(?m)\[(\d),(\d+)\] =   \'([^']*)' (Uninitialized|\r?\n  Group: (\d)   Config: (F|N) (U|D) (T|B), (\d), (\d), (\d)\r?\n  X:\s*(-?\d*.\d+|[*]+)   Y:\s+(-?\d*.\d+|[*]+)   Z:\s+(-?\d*.\d+|[*]+)\r?\n  W:\s*(-?\d*.\d+|[*]+)   P:\s*(-?\d*.\d+|[*]+)   R:\s*(-?\d*.\d+|[*]+)|  Group: (\d)\r?\n  (J1) =\s*(-?\d*.\d+|[*]+) deg   J2 =\s*(-?\d*.\d+|[*]+) deg   J3 =\s*(-?\d*.\d+|[*]+) deg \r?\n  J4 =\s*(-?\d*.\d+|[*]+) deg   J5 =\s*(-?\d*.\d+|[*]+) deg   J6 =\s*(-?\d*.\d+|[*]+) deg)`)
 	tpfilenamesRegexp = regexp.MustCompile(`>[A-Z][A-Z0-9_]*\.TP`)
-	tpPositionRegexp = regexp.MustCompile(`P\[(\d+)(:"([a-zA-Z0-9_ ]*)")?\]{\n\s{3}GP(\d):\n\tUF : (\d+), UT : (\d+),\t\tCONFIG : '(N|F) (U|D) (T|B), (-?\d), (-?\d), (-?\d)',\n\tX =\s+(-?\d*\.\d+)  mm,\tY =\s+(-?\d*\.\d+)  mm,\tZ =\s+(-?\d*\.\d+)  mm,\n\tW =\s+(-?\d*\.\d+) deg,\tP =\s+(-?\d*\.\d+) deg,\tR =\s+(-?\d*\.\d+) deg\n};`)
+	tpPositionRegexp = regexp.MustCompile(`P\[(\d+)(:"([a-zA-Z0-9_ ]*)")?\]{\r?\n\s{3}GP(\d):\r?\n\tUF : (\d+), UT : (\d+),\t\tCONFIG : '(N|F) (U|D) (T|B), (-?\d), (-?\d), (-?\d)',\r?\n\tX =\s+(-?\d*\.\d+)  mm,\tY =\s+(-?\d*\.\d+)  mm,\tZ =\s+(-?\d*\.\d+)  mm,\r?\n\tW =\s+(-?\d*\.\d+) deg,\tP =\s+(-?\d*\.\d+) deg,\tR =\s+(-?\d*\.\d+) deg\r?\n};`)
 }
 
 func parseErrors(src string) (errors []Error, err error) {
