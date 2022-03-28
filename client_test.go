@@ -32,6 +32,7 @@ func allTests(c Client, t *testing.T) {
 	testPosregs(c, t)
 	testErrors(c, t)
 	testIO(c, t)
+	testTPPrograms(c, t)
 }
 
 func testNumregs(c Client, t *testing.T) {
@@ -205,4 +206,45 @@ func TestNewClient(t *testing.T) {
 	if _, ok := c.(*HTTPClient); !ok {
 		t.Errorf("Bad type. Got %T, want *HTTPClient", c)
 	}
+}
+
+func testTPPrograms(c Client, t *testing.T) {
+	names, err := c.TPPrograms()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	exp := []string{
+		"A.TP",
+		"BG.TP",
+		"CALL.TP",
+		"CSTN_SERVER.TP",
+		"GETDATA.TP",
+		"GET_FSTN_PART.TP",
+		"PK_PLC_RECIPE_OPERATION.TP",
+		"PROMPTOK.TP",
+		"REQMENU.TP",
+		"SENDDATA.TP",
+		"SENDEVNT.TP",
+		"SENDSYSV.TP",
+		"SUB.TP",
+		"S_FAULT.TP",
+		"S_SETUP_OUTFEED_OFFSETS.TP",
+		"S_SET_PR.TP",
+		"S_TEST_SETUP_OUTFEED_OFFSETS.TP",
+		"TEST123.TP",
+		"TESTA.TP",
+	}
+
+	if len(names) != 19 {
+		t.Fatalf("bad names len: got %d, want %d", len(names), 19)
+
+	}
+
+	for i, e := range exp {
+		if names[i] != e {
+			t.Errorf("bad name. got %q, want %q", names[i], e)
+		}
+	}
+
 }

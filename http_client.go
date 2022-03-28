@@ -131,6 +131,10 @@ func (c *HTTPClient) PositionRegisters() ([]PositionRegister, error) {
 	return c.base.PositionRegisters()
 }
 
+func (c *HTTPClient) TPPrograms() ([]string, error) {
+	return c.base.TPPrograms()
+}
+
 func (c *HTTPClient) SetComment(t Type, id int, comment string) error {
 	fc := commentCodeFor(t)
 	if fc == invalid {

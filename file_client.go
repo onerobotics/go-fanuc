@@ -61,3 +61,7 @@ func (c *FileClient) NumericRegisters() ([]NumericRegister, error) {
 func (c *FileClient) PositionRegisters() ([]PositionRegister, error) {
 	return c.base.PositionRegisters()
 }
+
+func (c *FileClient) TPPrograms() ([]string, error) {
+	return c.base.TPPrograms()
+}

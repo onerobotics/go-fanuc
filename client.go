@@ -33,6 +33,7 @@ type Client interface {
 	IOClient
 	NumericRegisterClient
 	PositionRegisterClient
+	TPPrograms() ([]string, error)
 }
 
 func isDir(s string) bool {

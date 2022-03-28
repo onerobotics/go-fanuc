@@ -91,3 +91,12 @@ func (c *ParseClient) PositionRegisters() ([]PositionRegister, error) {
 
 	return parsePositionRegisters(body)
 }
+
+func (c *ParseClient) TPPrograms() ([]string, error) {
+	body, err := c.GetFunc(MD, "index_tp.htm")
+	if err != nil {
+		return nil, err
+	}
+
+	return parseTPPrograms(body)
+}

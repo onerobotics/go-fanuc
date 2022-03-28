@@ -25,7 +25,7 @@ func init() {
 	ioRegexp = regexp.MustCompile(`(AIN|AOUT|DIN|DOUT|GIN|GOUT|SI|SO|FLG|RI|RO|UI|UO)\[\s*(\d+)\]\s+(ON|OFF|\d+)  ([^\n]{0,24})`)
 	numregsRegexp = regexp.MustCompile(`\s+\[(\d+)\] = (-?\d*(\.\d+)?)  '([^']*)'`)
 	posregsRegexp = regexp.MustCompile(`(?m)\[(\d),(\d+)\] =   \'([^']*)' (Uninitialized|\r?\n  Group: (\d)   Config: (F|N) (U|D) (T|B), (\d), (\d), (\d)\r?\n  X:\s*(-?\d*.\d+|[*]+)   Y:\s+(-?\d*.\d+|[*]+)   Z:\s+(-?\d*.\d+|[*]+)\r?\n  W:\s*(-?\d*.\d+|[*]+)   P:\s*(-?\d*.\d+|[*]+)   R:\s*(-?\d*.\d+|[*]+)|  Group: (\d)\r?\n  (J1) =\s*(-?\d*.\d+|[*]+) deg   J2 =\s*(-?\d*.\d+|[*]+) deg   J3 =\s*(-?\d*.\d+|[*]+) deg \r?\n  J4 =\s*(-?\d*.\d+|[*]+) deg   J5 =\s*(-?\d*.\d+|[*]+) deg   J6 =\s*(-?\d*.\d+|[*]+) deg)`)
-	tpfilenamesRegexp = regexp.MustCompile(`>([A-Z][A-Z0-9_]*)\.TP`)
+	tpfilenamesRegexp = regexp.MustCompile(`>[A-Z][A-Z0-9_]*\.TP`)
 }
 
 func parseErrors(src string) (errors []Error, err error) {
@@ -240,6 +240,15 @@ func parsePositionRegisters(src string) (posregs []PositionRegister, err error) 
 				R: float32(r),
 			})
 		}
+	}
+
+	return
+}
+
+func parseTPPrograms(src string) (names []string, err error) {
+	matches := tpfilenamesRegexp.FindAllStringSubmatch(src, -1)
+	for _, m := range matches {
+		names = append(names, m[0][1:]) // remove leading <
 	}
 
 	return
