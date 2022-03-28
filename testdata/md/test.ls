@@ -1,0 +1,42 @@
+/PROG  TEST
+/ATTR
+OWNER		= MNEDITOR;
+COMMENT		= "";
+PROG_SIZE	= 545;
+CREATE		= DATE 22-03-24  TIME 16:18:00;
+MODIFIED	= DATE 22-03-25  TIME 09:23:34;
+FILE_NAME	= ;
+VERSION		= 0;
+LINE_COUNT	= 2;
+MEMORY_SIZE	= 909;
+PROTECT		= READ_WRITE;
+TCD:  STACK_SIZE	= 0,
+      TASK_PRIORITY	= 50,
+      TIME_SLICE	= 0,
+      BUSY_LAMP_OFF	= 0,
+      ABORT_REQUEST	= 0,
+      PAUSE_REQUEST	= 0;
+DEFAULT_GROUP	= 1,*,*,*,*;
+CONTROL_CODE	= 00000000 00000000;
+LOCAL_REGISTERS	= 0,0,0;
+/APPL
+
+AUTO_SINGULARITY_HEADER;
+  ENABLE_SINGULARITY_AVOIDANCE   : FALSE;
+/MN
+   1:J P[2:test 123] 100% FINE    ;
+   2:J P[1] 100% FINE    ;
+/POS
+P[1]{
+   GP1:
+	UF : 0, UT : 1,		CONFIG : 'N U T, 0, 0, 0',
+	X =  1295.220  mm,	Y =  -398.168  mm,	Z =  1301.202  mm,
+	W =   -31.640 deg,	P =    88.218 deg,	R =   147.540 deg
+};
+P[2:"test 123"]{
+   GP1:
+	UF : 0, UT : 1,		CONFIG : 'F D B, -1, -1, 1',
+	X =  1153.583  mm,	Y = -1754.161  mm,	Z =   493.036  mm,
+	W =    90.147 deg,	P =      .582 deg,	R =     -.593 deg
+};
+/END

@@ -17,6 +17,7 @@ var (
 	numregsRegexp     *regexp.Regexp
 	posregsRegexp     *regexp.Regexp
 	tpfilenamesRegexp *regexp.Regexp
+	tpPositionRegexp  *regexp.Regexp
 )
 
 func init() {
@@ -26,6 +27,7 @@ func init() {
 	numregsRegexp = regexp.MustCompile(`\s+\[(\d+)\] = (-?\d*(\.\d+)?)  '([^']*)'`)
 	posregsRegexp = regexp.MustCompile(`(?m)\[(\d),(\d+)\] =   \'([^']*)' (Uninitialized|\r?\n  Group: (\d)   Config: (F|N) (U|D) (T|B), (\d), (\d), (\d)\r?\n  X:\s*(-?\d*.\d+|[*]+)   Y:\s+(-?\d*.\d+|[*]+)   Z:\s+(-?\d*.\d+|[*]+)\r?\n  W:\s*(-?\d*.\d+|[*]+)   P:\s*(-?\d*.\d+|[*]+)   R:\s*(-?\d*.\d+|[*]+)|  Group: (\d)\r?\n  (J1) =\s*(-?\d*.\d+|[*]+) deg   J2 =\s*(-?\d*.\d+|[*]+) deg   J3 =\s*(-?\d*.\d+|[*]+) deg \r?\n  J4 =\s*(-?\d*.\d+|[*]+) deg   J5 =\s*(-?\d*.\d+|[*]+) deg   J6 =\s*(-?\d*.\d+|[*]+) deg)`)
 	tpfilenamesRegexp = regexp.MustCompile(`>[A-Z][A-Z0-9_]*\.TP`)
+	tpPositionRegexp = regexp.MustCompile(`P\[(\d+)(:"([a-zA-Z0-9_ ]*)")?\]{\n\s{3}GP(\d):\n\tUF : (\d+), UT : (\d+),\t\tCONFIG : '(N|F) (U|D) (T|B), (-?\d), (-?\d), (-?\d)',\n\tX =\s+(-?\d*\.\d+)  mm,\tY =\s+(-?\d*\.\d+)  mm,\tZ =\s+(-?\d*\.\d+)  mm,\n\tW =\s+(-?\d*\.\d+) deg,\tP =\s+(-?\d*\.\d+) deg,\tR =\s+(-?\d*\.\d+) deg\n};`)
 }
 
 func parseErrors(src string) (errors []Error, err error) {
@@ -174,12 +176,12 @@ func parsePositionRegisters(src string) (posregs []PositionRegister, err error) 
 
 		switch {
 		case m[4] == "Uninitialized":
-			posregs = append(posregs, PositionRegister{
-				Id:      id,
-				Comment: m[3],
-				Group:   group,
-				Rep:     Uninitialized,
-			})
+			pr := PositionRegister{}
+			pr.Id = id
+			pr.Comment = m[3]
+			pr.Group = group
+			pr.Rep = Uninitialized
+			posregs = append(posregs, pr)
 		case m[16] == "J1":
 			j1, _ := strconv.ParseFloat(m[17], 32)
 			j2, _ := strconv.ParseFloat(m[18], 32)
@@ -188,19 +190,19 @@ func parsePositionRegisters(src string) (posregs []PositionRegister, err error) 
 			j5, _ := strconv.ParseFloat(m[21], 32)
 			j6, _ := strconv.ParseFloat(m[22], 32)
 
-			posregs = append(posregs, PositionRegister{
-				Id:      id,
-				Comment: m[3],
-
-				Group: group,
-				Rep:   Joint,
-				Joints: []float32{float32(j1),
-					float32(j2),
-					float32(j3),
-					float32(j4),
-					float32(j5),
-					float32(j6)},
-			})
+			pr := PositionRegister{}
+			pr.Id = id
+			pr.Comment = m[3]
+			pr.Group = group
+			pr.Rep = Joint
+			pr.Joints = []float32{float32(j1),
+				float32(j2),
+				float32(j3),
+				float32(j4),
+				float32(j5),
+				float32(j6),
+			}
+			posregs = append(posregs, pr)
 		default:
 			cfgFlip := m[6] == "F"
 			cfgUp := m[7] == "U"
@@ -220,25 +222,25 @@ func parsePositionRegisters(src string) (posregs []PositionRegister, err error) 
 			w, _ := strconv.ParseFloat(m[15], 32)
 			p, _ := strconv.ParseFloat(m[16], 32)
 			r, _ := strconv.ParseFloat(m[17], 32)
-			posregs = append(posregs, PositionRegister{
-				Id:      id,
-				Comment: m[3],
 
-				Group: group,
-				Rep:   Cartesian,
-				Config: Config{
-					Flip:       cfgFlip,
-					Up:         cfgUp,
-					Top:        cfgTop,
-					TurnCounts: []int{tc1, tc2, tc3},
-				},
-				X: float32(x),
-				Y: float32(y),
-				Z: float32(z),
-				W: float32(w),
-				P: float32(p),
-				R: float32(r),
-			})
+			pr := PositionRegister{}
+			pr.Id = id
+			pr.Comment = m[3]
+			pr.Group = group
+			pr.Rep = Cartesian
+			pr.Config = Config{
+				Flip:       cfgFlip,
+				Up:         cfgUp,
+				Top:        cfgTop,
+				TurnCounts: [3]int{tc1, tc2, tc3},
+			}
+			pr.X = float32(x)
+			pr.Y = float32(y)
+			pr.Z = float32(z)
+			pr.W = float32(w)
+			pr.P = float32(p)
+			pr.R = float32(r)
+			posregs = append(posregs, pr)
 		}
 	}
 
@@ -252,4 +254,88 @@ func parseTPPrograms(src string) (names []string, err error) {
 	}
 
 	return
+}
+
+func parseTPPositions(src string) ([]Position, error) {
+	matches := tpPositionRegexp.FindAllStringSubmatch(src, -1)
+	var positions []Position
+	for _, m := range matches {
+		id, err := strconv.Atoi(m[1])
+		if err != nil {
+			return nil, err
+		}
+		group, err := strconv.Atoi(m[4])
+		if err != nil {
+			return nil, err
+		}
+
+		uf, err := strconv.Atoi(m[5])
+		if err != nil {
+			return nil, err
+		}
+
+		ut, err := strconv.Atoi(m[6])
+		if err != nil {
+			return nil, err
+		}
+
+		tc0, err := strconv.Atoi(m[10])
+		if err != nil {
+			return nil, err
+		}
+		tc1, err := strconv.Atoi(m[11])
+		if err != nil {
+			return nil, err
+		}
+		tc2, err := strconv.Atoi(m[12])
+		if err != nil {
+			return nil, err
+		}
+
+		x, err := strconv.ParseFloat(m[13], 32)
+		if err != nil {
+			return nil, err
+		}
+		y, err := strconv.ParseFloat(m[14], 32)
+		if err != nil {
+			return nil, err
+		}
+		z, err := strconv.ParseFloat(m[15], 32)
+		if err != nil {
+			return nil, err
+		}
+		w, err := strconv.ParseFloat(m[16], 32)
+		if err != nil {
+			return nil, err
+		}
+		p_, err := strconv.ParseFloat(m[17], 32)
+		if err != nil {
+			return nil, err
+		}
+		r, err := strconv.ParseFloat(m[18], 32)
+		if err != nil {
+			return nil, err
+		}
+
+		var p Position
+		p.Id = id
+		p.Comment = m[3]
+		p.Group = group
+		p.Uframe = uf
+		p.Utool = ut
+		p.Config.Flip = m[7] == "F"
+		p.Config.Up = m[8] == "U"
+		p.Config.Top = m[9] == "T"
+		p.Config.TurnCounts = [3]int{tc0, tc1, tc2}
+		p.X = float32(x)
+		p.Y = float32(y)
+		p.Z = float32(z)
+		p.W = float32(w)
+		p.P = float32(p_)
+		p.R = float32(r)
+
+		positions = append(positions, p)
+	}
+
+	return positions, nil
 }

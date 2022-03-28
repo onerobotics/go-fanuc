@@ -65,3 +65,7 @@ func (c *FileClient) PositionRegisters() ([]PositionRegister, error) {
 func (c *FileClient) TPPrograms() ([]string, error) {
 	return c.base.TPPrograms()
 }
+
+func (c *FileClient) TPPositions(programName string) ([]Position, error) {
+	return c.base.TPPositions(programName)
+}

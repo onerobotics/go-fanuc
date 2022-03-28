@@ -7,7 +7,7 @@ import (
 )
 
 func TestFileClient(t *testing.T) {
-	c, err := NewFileClient("testdata")
+	c, err := NewFileClient("testdata/MD")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -33,6 +33,7 @@ func allTests(c Client, t *testing.T) {
 	testErrors(c, t)
 	testIO(c, t)
 	testTPPrograms(c, t)
+	testTPPositions(c, t)
 }
 
 func testNumregs(c Client, t *testing.T) {
@@ -247,4 +248,88 @@ func testTPPrograms(c Client, t *testing.T) {
 		}
 	}
 
+}
+
+func testTPPositions(c Client, t *testing.T) {
+	positions, err := c.TPPositions("TEST.TP")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	exp := []Position{
+		Position{
+			Id:      1,
+			Comment: "",
+			Group:   1,
+			Rep:     Cartesian,
+			Uframe:  0,
+			Utool:   1,
+			Config: Config{
+				Flip:       false,
+				Up:         true,
+				Top:        true,
+				TurnCounts: [3]int{0, 0, 0},
+			},
+			X: float32(1295.220),
+			Y: float32(-398.168),
+			Z: float32(1301.202),
+			W: float32(-31.64),
+			P: float32(88.218),
+			R: float32(147.54),
+		},
+		Position{
+			Id:      2,
+			Comment: "test 123",
+			Group:   1,
+			Rep:     Cartesian,
+			Uframe:  0,
+			Utool:   1,
+			Config: Config{
+				Flip:       true,
+				Up:         false,
+				Top:        false,
+				TurnCounts: [3]int{-1, -1, 1},
+			},
+			X: float32(1153.583),
+			Y: float32(-1754.161),
+			Z: float32(493.036),
+			W: float32(90.147),
+			P: float32(0.582),
+			R: float32(-0.593),
+		},
+	}
+
+	if len(positions) != len(exp) {
+		t.Errorf("bad # of positions. got %d, want %d", len(positions), len(exp))
+	}
+
+	for i, e := range exp {
+		if positions[i].Id != e.Id {
+			t.Errorf("Bad id. Got %d, want %d", positions[i].Id, e.Id)
+		}
+
+		if positions[i].Comment != e.Comment {
+			t.Errorf("bad comment. got %q, want %q", positions[i].Comment, e.Comment)
+		}
+
+		if positions[i].Group != e.Group {
+			t.Errorf("Bad group. Got %d, want %d", positions[i].Group, e.Group)
+		}
+
+		if positions[i].Uframe != e.Uframe {
+			t.Errorf("Bad uframe. Got %d, want %d", positions[i].Uframe, e.Uframe)
+		}
+
+		if positions[i].Utool != e.Utool {
+			t.Errorf("Bad utool. Got %d, want %d", positions[i].Utool, e.Utool)
+		}
+
+		if positions[i].Config != e.Config {
+			t.Errorf("bad config.top got %v, want %v", positions[i].Config, e.Config)
+		}
+
+		if positions[i].X != e.X {
+			t.Errorf("bad X. got %f, want %f", positions[i].X, e.X)
+		}
+	}
 }

@@ -34,6 +34,7 @@ type Client interface {
 	NumericRegisterClient
 	PositionRegisterClient
 	TPPrograms() ([]string, error)
+	TPPositions(programName string) ([]Position, error)
 }
 
 func isDir(s string) bool {

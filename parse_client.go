@@ -1,5 +1,9 @@
 package fanuc
 
+import (
+	"strings"
+)
+
 type GetFunc = func(device, string) (string, error)
 
 type ParseClient struct {
@@ -99,4 +103,14 @@ func (c *ParseClient) TPPrograms() ([]string, error) {
 	}
 
 	return parseTPPrograms(body)
+}
+
+func (c *ParseClient) TPPositions(programName string) ([]Position, error) {
+	lsName := strings.Replace(strings.ToLower(programName), ".tp", ".ls", -1)
+	body, err := c.GetFunc(MD, lsName)
+	if err != nil {
+		return nil, err
+	}
+
+	return parseTPPositions(body)
 }

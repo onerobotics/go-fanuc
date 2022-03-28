@@ -6,30 +6,8 @@ import (
 
 // TODO: refactor this ugliness!
 
-type Rep int
-
-const (
-	Joint Rep = iota
-	Cartesian
-	Uninitialized
-)
-
-type Config struct {
-	Flip       bool
-	Up         bool
-	Top        bool
-	TurnCounts []int
-}
-
 type PositionRegister struct {
-	Id      int
-	Comment string
-
-	Group int
-	Rep
-	Config
-	X, Y, Z, W, P, R float32
-	Joints           []float32
+	Position
 }
 
 func (p PositionRegister) Value() string {
